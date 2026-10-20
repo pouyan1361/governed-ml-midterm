@@ -67,6 +67,11 @@ def run_gate(metrics, policy):
         "Equally safe drivers must have similar chances across groups."))
 
     # 5. LAB 5: add a check on metrics["fpr_ratio"] against a NEW policy key
+    if "min_fpr_ratio" in policy:
+        results.append(check(
+            "fpr_ratio", metrics["fpr_ratio"], policy["min_fpr_ratio"],
+            metrics["fpr_ratio"] >= policy["min_fpr_ratio"],
+            "Claim-filing drivers must be let through at similar rates across groups."))
     #    (suggested name: min_fpr_ratio). Make it conditional on the key being
     #    present, so a policy without it still works:
     #

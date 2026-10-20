@@ -1,9 +1,9 @@
 {
   "model_version": "v3",
-  "author": "YOUR NAME HERE",
-  "description": "Describe your model in one sentence.",
+  "author": "Madison Metz",
+  "description": "Logistic regression on declared fields with four driving history features (worst hard-braking month, night share, speeding velocity, claims per month); no vendor territory index.",
   "model_type": "logistic_regression",
   "params": {},
-  "features": ["years_licensed", "vehicle_age", "vehicle_value", "annual_mileage_declared", "prior_insurer_years", "prior_claims_3y"],
+  "features": ["years_licensed", "vehicle_age", "vehicle_value", "annual_mileage_declared", "prior_insurer_years", "prior_claims_3y", "mileage_per_year_licensed", "log_vehicle_value", "max_hard_brakes_per_1k", "night_share_mean", "speeding_velocity", "claims_per_month"],
   "decision_threshold": 0.5
 }
