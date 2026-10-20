@@ -116,6 +116,7 @@ Fill in the pull request template on GitHub. Then answer here:
 
 **7.1** The workflow paused with "awaiting approval" before it ran. Which control is that, in the language of owner, trigger and evidence?
 
+This is a preventive approval control. The owner is the repository maintainer, pouyan1361. The trigger is a pull request from a fork requesting a workflow run. Evidence is the “1 workflow awaiting approval” status and the approval record in GitHub Actions once approved.
 **7.2** After approval, what did Stage A print about your governance change? Quote it.
 
 ---
