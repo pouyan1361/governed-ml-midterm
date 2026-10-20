@@ -66,15 +66,14 @@ def run_gate(metrics, policy):
         metrics["tpr_ratio"] >= policy["min_tpr_ratio"],
         "Equally safe drivers must have similar chances across groups."))
 
-    # 5. LAB 5: add a check on metrics["fpr_ratio"] against a NEW policy key
-    #    (suggested name: min_fpr_ratio). Make it conditional on the key being
-    #    present, so a policy without it still works:
-    #
-    #        if "min_fpr_ratio" in policy:
-    #            results.append(check( ... ))
-    #
-    #    Then choose the threshold in governance/policy.json, defend it in
-    #    MIDTERM.md, and prove the check fires in tests/test_lab5_gate.py.
+   # 5. LAB 5: false positive rate parity across groups (DETECTIVE).
+    #    fpr_ratio = lowest group FPR / highest group FPR. A low ratio means
+    #    drivers who DID file a claim are approved far more often in one group.
+    if "min_fpr_ratio" in policy:
+        results.append(check(
+            "fpr_ratio", metrics["fpr_ratio"], policy["min_fpr_ratio"],
+            metrics["fpr_ratio"] >= policy["min_fpr_ratio"],
+            "Drivers who go on to file a claim must be approved at similar rates across groups."))
 
     passed = all(r["passed"] for r in results)
     return {"decision": "PASS" if passed else "BLOCKED", "policy_version": policy["policy_version"], "checks": results}

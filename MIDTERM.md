@@ -1,8 +1,8 @@
 # BANA 690A Midterm: Written Answers
 
-**Name:**
-**Last-name group (A to H, I to P, Q to Z):**
-**GitHub username:**
+**Name:*Aastha Malhotra*
+**Last-name group (A to H, I to P, Q to Z):*M*
+**GitHub username:*am-malhotra*
 
 This file is half of your exam. The code and the pipeline grade the other half.
 Write in full sentences. Cite evidence from THIS repository: a file name, a line,
@@ -14,12 +14,24 @@ Open book. Individual. Keep each answer short and specific.
 ## Lab 1: Make the data compliant
 
 **1.1** Which four tests failed when you first ran `python -m pytest -q tests/test_lab1_compliance.py`? For each, name the control type (list or detective).
+test_no_zip_like_column – 
+Error: ZIP-like quasi-identifier columns reached training: ['zip']- detective
+test_no_date_like_column – 
+Error: Date-like quasi-identifier columns reached training: ['date_of_birth'] - detective
+test_no_suspiciously_predictive_column – 
+Error: Columns correlated with the label above 0.6: {'adjuster_fraud_review': 0.845} - detective
+test_policy_agrees_with_data_dictionary – 
+Error: Policy is incomplete. Add to pii_columns: ['zip', 'date_of_birth']. Add to leakage_columns: ['adjuster_fraud_review]- detective
+
 
 **1.2** What did you add to `governance/policy.json`, and under which keys?
+Additions made: 
+  "pii_columns":  "zip","date_of_birth"],
+  "leakage_columns": ["adjuster_fraud_review"],
 
 **1.3** Why is the fix in the policy and not in `src/prepare.py`? One or two sentences.
 
----
+---we want the code to read from the policy and not hardcode it in the code in the source file 
 
 ## Lab 2: Build features from driving history
 
