@@ -1,9 +1,10 @@
 {
   "model_version": "v3",
-  "author": "YOUR NAME HERE",
-  "description": "Describe your model in one sentence.",
+  "author": "Vanessa Ojeda-Coogan",
+  "description": "Logistic regression using declared applicant fields and pre-decision driving-history features.",
   "model_type": "logistic_regression",
   "params": {},
-  "features": ["years_licensed", "vehicle_age", "vehicle_value", "annual_mileage_declared", "prior_insurer_years", "prior_claims_3y"],
+  "features": ["years_licensed", "vehicle_age", "vehicle_value", "annual_mileage_declared", "prior_insurer_years", "prior_claims_3y"
+, "claims_per_month", "speeding_velocity", "night_share_mean", "hard_brake_trend"],
   "decision_threshold": 0.5
 }
