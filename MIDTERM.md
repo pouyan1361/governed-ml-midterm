@@ -116,6 +116,7 @@ Adding territory_risk_index raised AUC to 0.8448, but the model was BLOCKED beca
 Fill in the pull request template on GitHub. Then answer here:
 
 **7.1** The workflow paused with "awaiting approval" before it ran. Which control is that, in the language of owner, trigger and evidence?
+The pause is the owner part of the control. The instructor has to approve before anything runs. The pull request is the trigger, and the CI log and saved files are the evidence.
 
 **7.2** After approval, what did Stage A print about your governance change? Quote it.
 
@@ -124,10 +125,12 @@ Fill in the pull request template on GitHub. Then answer here:
 ## Lab 8 (bonus): Break it and watch it stop
 
 **8.1** What did you change on your second branch, and what did `python run_pipeline.py --config configs/v2.json` print locally?
+On my cheat branch, I lowered the fairness limits to 0.50 and the subgroup AUC limit to 0.55. When I ran v2 locally, it passed, so nothing on my own computer stopped it.
 
 **8.2** What did Stage A print on GitHub? Quote the refusal line.
 
 **8.3** Which control would NOT have stopped this change on its own, and why do we need both?
+The gate wouldn’t have stopped it on its own, because it just uses whatever limits are in the policy. Stage A catches it by comparing against the original policy and refusing anything that was loosened. We need both: the gate checks the model, and Stage A protects the rules.
 
 ---
 
