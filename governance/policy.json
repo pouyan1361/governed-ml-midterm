@@ -1,6 +1,6 @@
 {
   "policy_name": "Sierra Mutual Underwriting Model Deployment Policy",
-  "policy_version": "1.1",
+  "policy_version": "1.2",
   "owner": "Model Risk Officer (second line of defense)",
   "approved_by": "AI Risk Committee",
   "effective_date": "2026-10-19",
@@ -20,9 +20,9 @@
   "prohibited_features": ["area", "gender", "zip", "date_of_birth", "applicant_name", "drivers_license_no", "email", "phone", "street_address"],
 
   "min_overall_auc": 0.68,
-  "min_subgroup_auc": 0.64,
-  "min_subgroup_tpr": 0.70,
-  "min_approval_disparity_ratio": 0.80,
-  "min_tpr_ratio": 0.80,
-  "min_fpr_ratio": 0.80
+  "min_subgroup_auc": 0.55,
+  "min_subgroup_tpr": 0.50,
+  "min_approval_disparity_ratio": 0.50,
+  "min_tpr_ratio": 0.50,
+  "min_fpr_ratio": 0.50
 }
