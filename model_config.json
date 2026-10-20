@@ -1,9 +1,22 @@
+
 {
   "model_version": "v3",
-  "author": "YOUR NAME HERE",
-  "description": "Describe your model in one sentence.",
+  "author": "Lori Balian",
+  "description": "Logistic regression using insurance and driving history features to predict future claims.",
   "model_type": "logistic_regression",
   "params": {},
-  "features": ["years_licensed", "vehicle_age", "vehicle_value", "annual_mileage_declared", "prior_insurer_years", "prior_claims_3y"],
+  "features": [
+    "years_licensed",
+    "vehicle_age",
+    "vehicle_value",
+    "annual_mileage_declared",
+    "prior_insurer_years",
+    "prior_claims_3y",
+    "claims_per_month",
+    "months_since_last_claim",
+    "max_hard_brakes_per_1k",
+    "night_share_mean",
+    "miles_volatility"
+  ],
   "decision_threshold": 0.5
 }
