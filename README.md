@@ -8,6 +8,7 @@ dataset, and this time **you are also the governance team**.
 Instructor repo: `github.com/pouyan1361/governed-ml-midterm`
 Open book. Individual. In class. Eight labs, the eighth is bonus.
 
+
 ## The business
 
 Sierra Mutual sells one-year auto policies. At application time an underwriter
