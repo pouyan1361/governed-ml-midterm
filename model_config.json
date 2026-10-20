@@ -1,9 +1,9 @@
 {
   "model_version": "v3",
-  "author": "YOUR NAME HERE",
-  "description": "Describe your model in one sentence.",
+  "author": "Sharon Das",
+  "description": "Logistic regression on the six declared application fields plus four driving-history features (recency, extremes, velocity, ratio); excludes the vendor territory_risk_index because it is a proxy for area.",
   "model_type": "logistic_regression",
   "params": {},
-  "features": ["years_licensed", "vehicle_age", "vehicle_value", "annual_mileage_declared", "prior_insurer_years", "prior_claims_3y"],
+  "features": ["years_licensed", "vehicle_age", "vehicle_value", "annual_mileage_declared", "prior_insurer_years", "prior_claims_3y", "months_since_last_claim", "max_hard_brakes_per_1k", "speeding_velocity", "night_share_mean"],
   "decision_threshold": 0.5
 }
