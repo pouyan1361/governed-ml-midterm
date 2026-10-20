@@ -1,9 +1,9 @@
 {
   "model_version": "v3",
-  "author": "YOUR NAME HERE",
-  "description": "Describe your model in one sentence.",
-  "model_type": "logistic_regression",
-  "params": {},
-  "features": ["years_licensed", "vehicle_age", "vehicle_value", "annual_mileage_declared", "prior_insurer_years", "prior_claims_3y"],
+  "author": "Myong Brian Pak",
+  "description": "Gradient boosting on declared application fields plus five driving-history features, with no vendor territory index.",
+  "model_type": "gradient_boosting",
+  "params": {"n_estimators": 200, "max_depth": 2, "learning_rate": 0.05},
+  "features": ["years_licensed", "vehicle_age", "vehicle_value", "annual_mileage_declared", "prior_insurer_years", "prior_claims_3y", "claims_per_month", "months_since_last_claim", "speeding_velocity", "hard_brake_trend", "night_share_mean"],
   "decision_threshold": 0.5
 }
