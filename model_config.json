@@ -1,9 +1,21 @@
+
 {
   "model_version": "v3",
-  "author": "YOUR NAME HERE",
-  "description": "Describe your model in one sentence.",
+  "author": "Abdul Rahman Mohammed",
+  "description": "Logistic regression model predicting claim-free driving using application information and historical driving behavior.",
   "model_type": "logistic_regression",
   "params": {},
-  "features": ["years_licensed", "vehicle_age", "vehicle_value", "annual_mileage_declared", "prior_insurer_years", "prior_claims_3y"],
+  "features": [
+    "years_licensed",
+    "vehicle_age",
+    "vehicle_value",
+    "annual_mileage_declared",
+    "prior_insurer_years",
+    "prior_claims_3y",
+    "claims_per_month",
+    "months_since_last_claim",
+    "speeding_velocity",
+    "hard_brake_trend"
+  ],
   "decision_threshold": 0.5
 }
