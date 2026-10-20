@@ -128,6 +128,7 @@ The pause is the owner part of the control. The instructor has to approve before
 On my cheat branch, I lowered the fairness limits to 0.50 and the subgroup AUC limit to 0.55. When I ran v2 locally, it passed, so nothing on my own computer stopped it.
 
 **8.2** What did Stage A print on GitHub? Quote the refusal line.
+REFUSED: this pull request LOOSENS governance:
 
 **8.3** Which control would NOT have stopped this change on its own, and why do we need both?
 The gate wouldn’t have stopped it on its own, because it just uses whatever limits are in the policy. Stage A catches it by comparing against the original policy and refusing anything that was loosened. We need both: the gate checks the model, and Stage A protects the rules.
