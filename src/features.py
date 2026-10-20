@@ -74,14 +74,12 @@ def recent(history, window=RECENT_WINDOW, decision_month=DECISION_MONTH):
 # GUIDED EXAMPLE (Lab 2, part 1)  family: FREQUENCY
 # --------------------------------------------------------------------------
 def claims_per_month(history):
-    """Prior at-fault claims per month over the 24 months before the decision.
+    """...docstring..."""
+    h = as_of(history)
+    total = h.groupby("policy_id")["claim_filed"].sum()
+    return total / DECISION_MONTH
 
-    Steps (also on the slides):
-      1. h = as_of(history)                       keep months 1..24 only
-      2. total = h.groupby("policy_id")["claim_filed"].sum()
-      3. return total / DECISION_MONTH            a rate, so it is a FREQUENCY
-    """
-    return None   # LAB 2: replace this line with the three steps above
+    # return None   # LAB 2: replace this line with the three steps above
 
 
 # --------------------------------------------------------------------------
@@ -89,41 +87,77 @@ def claims_per_month(history):
 # Each returns a Series indexed by policy_id, or None if not implemented.
 # --------------------------------------------------------------------------
 def months_since_last_claim(history):
-    """RECENCY: months between the most recent prior claim and the decision.
-    If a driver never filed a claim in the window, use DECISION_MONTH + 1
-    (one more than the longest possible gap). Never use 0 for 'never'."""
-    return None
+    h = as_of(history)
+    last = h[h["claim_filed"] == 1].groupby("policy_id")["month"].max()
+    last = last.reindex(h["policy_id"].unique())
+    return (DECISION_MONTH + 1 - last).fillna(DECISION_MONTH + 1)
+
 
 
 def speeding_velocity(history):
-    """VELOCITY: speeding events per 1,000 miles in the recent window, divided
-    by speeding events per 1,000 miles over the whole 24 months.
-    Add a small constant to the denominator so a driver with zero baseline
-    events does not produce infinity."""
-    return None
+    h = as_of(history)
+    r = recent(h)
 
+    overall = (
+        h.groupby("policy_id")["speeding_events"].sum()
+        / h.groupby("policy_id")["miles"].sum().replace(0, float("nan"))
+        * 1000
+    )
+
+    recent_rate = (
+        r.groupby("policy_id")["speeding_events"].sum()
+        / r.groupby("policy_id")["miles"].sum().replace(0, float("nan"))
+        * 1000
+    )
+
+    return (recent_rate / (overall + 0.1)).reindex(overall.index).fillna(0)
 
 def miles_volatility(history):
-    """VOLATILITY: coefficient of variation of monthly miles
-    (standard deviation divided by mean) over the 24 months."""
-    return None
+    h = as_of(history)
+    grouped = h.groupby("policy_id")["miles"]
+
+    std = grouped.std().fillna(0)
+    mean = grouped.mean().replace(0, float("nan"))
+
+    return (std / mean).fillna(0)
 
 
 def max_hard_brakes_per_1k(history):
-    """EXTREMES: the single worst month, measured as hard brakes per 1,000
-    miles in that month, over the 24 months."""
-    return None
+    h = as_of(history).copy()
+
+    h["brake_rate"] = (
+        h["hard_brakes"]
+        / h["miles"].replace(0, float("nan"))
+        * 1000
+    )
+
+    return h.groupby("policy_id")["brake_rate"].max().fillna(0)
 
 
 def hard_brake_trend(history):
-    """TREND: hard brakes per 1,000 miles in months 13..24 minus hard brakes
-    per 1,000 miles in months 1..12. Positive means getting worse."""
-    return None
+    h = as_of(history)
 
+    early = h[h["month"] <= 12]
+    late = h[h["month"] > 12]
+
+    early_rate = (
+        early.groupby("policy_id")["hard_brakes"].sum()
+        / early.groupby("policy_id")["miles"].sum().replace(0, float("nan"))
+        * 1000
+    )
+
+    late_rate = (
+        late.groupby("policy_id")["hard_brakes"].sum()
+        / late.groupby("policy_id")["miles"].sum().replace(0, float("nan"))
+        * 1000
+    )
+
+    trend = late_rate - early_rate
 
 def night_share_mean(history):
-    """RATIO: average share of miles driven at night over the 24 months."""
-    return None
+    h = as_of(history)
+
+    return h.groupby("policy_id")["night_miles_share"].mean().fillna(0)
 
 
 # --------------------------------------------------------------------------
