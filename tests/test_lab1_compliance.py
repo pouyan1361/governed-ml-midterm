@@ -121,3 +121,14 @@ def test_policy_agrees_with_data_dictionary():
     missing_leak = [c for c in outcomes if c not in POLICY["leakage_columns"]]
     assert not missing_pii and not missing_leak, (
         f"Policy is incomplete. Add to pii_columns: {missing_pii}. Add to leakage_columns: {missing_leak}.")
+
+
+# ---------------- CHANGE / FIX LOG ----------------
+# Add a dated entry here whenever a change or fix is made in this repository.
+# 2026-10-20: Added this log for tracking future changes and fixes.
+# 2026-10-20: Added the change/terminal output log convention to MIDTERM.md.
+#             No command run for this documentation-only change.
+# 2026-10-20: Recorded pip install output in MIDTERM.md.
+# 2026-10-20: Added zip/date_of_birth and adjuster_fraud_review to policy lists;
+#             tests/test_lab1_compliance.py passed (11 tests).
+# 2026-10-20: Clarified Lab 1 control types and dictionary-based list choices in MIDTERM.md.

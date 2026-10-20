@@ -1,9 +1,9 @@
 {
   "model_version": "v3",
-  "author": "YOUR NAME HERE",
-  "description": "Describe your model in one sentence.",
+  "author": "Kathlyn Miller-Francis",
+  "description": "Logistic regression on declared application fields plus hard-braking extremes and speeding velocity from pre-decision driving history.",
   "model_type": "logistic_regression",
-  "params": {},
-  "features": ["years_licensed", "vehicle_age", "vehicle_value", "annual_mileage_declared", "prior_insurer_years", "prior_claims_3y"],
+  "params": {"C": 0.5},
+  "features": ["years_licensed", "vehicle_age", "vehicle_value", "annual_mileage_declared", "prior_insurer_years", "prior_claims_3y", "max_hard_brakes_per_1k", "speeding_velocity", "claims_per_month"],
   "decision_threshold": 0.5
 }
