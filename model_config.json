@@ -1,9 +1,13 @@
 {
   "model_version": "v3",
-  "author": "YOUR NAME HERE",
-  "description": "Describe your model in one sentence.",
+  "author": "Sabrina Quevedo",
+  "description": "Logistic regression on the declared fields with 5 features",
   "model_type": "logistic_regression",
   "params": {},
-  "features": ["years_licensed", "vehicle_age", "vehicle_value", "annual_mileage_declared", "prior_insurer_years", "prior_claims_3y"],
+  "features": ["years_licensed", "vehicle_age",
+  "vehicle_value", "annual_mileage_declared",
+  "prior_insurer_years", "prior_claims_3y",
+  "claims_per_month", "miles_volatility",
+  "max_hard_brakes_per_1k", "night_share_mean"],
   "decision_threshold": 0.5
 }

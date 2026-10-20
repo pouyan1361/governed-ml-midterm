@@ -70,8 +70,16 @@ def run_gate(metrics, policy):
     #    (suggested name: min_fpr_ratio). Make it conditional on the key being
     #    present, so a policy without it still works:
     #
-    #        if "min_fpr_ratio" in policy:
-    #            results.append(check( ... ))
+    if "min_fpr_ratio" in policy:
+                results.append(check(
+                     "fpr_ratio",
+                     metrics["fpr_ratio"],
+                     policy["min_fpr_ratio"],
+                     metrics["fpr_ratio"] >= policy["min_fpr_ratio"],
+                     "Claim-filing drivers must be let through at"
+                     " similar rates across groups."))
+
+
     #
     #    Then choose the threshold in governance/policy.json, defend it in
     #    MIDTERM.md, and prove the check fires in tests/test_lab5_gate.py.
