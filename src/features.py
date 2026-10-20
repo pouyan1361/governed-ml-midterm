@@ -81,7 +81,9 @@ def claims_per_month(history):
       2. total = h.groupby("policy_id")["claim_filed"].sum()
       3. return total / DECISION_MONTH            a rate, so it is a FREQUENCY
     """
-    return None   # LAB 2: replace this line with the three steps above
+    h = as_of(history)
+    total = h.groupby("policy_id")["claim_filed"].sum()
+    return total / DECISION_MONTH
 
 
 # --------------------------------------------------------------------------
@@ -92,7 +94,11 @@ def months_since_last_claim(history):
     """RECENCY: months between the most recent prior claim and the decision.
     If a driver never filed a claim in the window, use DECISION_MONTH + 1
     (one more than the longest possible gap). Never use 0 for 'never'."""
-    return None
+    h = as_of(history)
+    last = h[h["claim_filed"] == 1].groupby("policy_id")["month"].max()
+    last = last.reindex(h["policy_id"].unique())
+    gap = (DECISION_MONTH + 1) - last
+    return gap.fillna(DECISION_MONTH + 1)
 
 
 def speeding_velocity(history):
@@ -100,30 +106,44 @@ def speeding_velocity(history):
     by speeding events per 1,000 miles over the whole 24 months.
     Add a small constant to the denominator so a driver with zero baseline
     events does not produce infinity."""
-    return None
+    r = recent(history)
+    h = as_of(history)
+    recent_rate = r.groupby("policy_id")["speeding_events"].sum() / r.groupby("policy_id")["miles"].sum() * 1000
+    base_rate = h.groupby("policy_id")["speeding_events"].sum() / h.groupby("policy_id")["miles"].sum() * 1000
+    return recent_rate / (base_rate + 0.1)
 
 
 def miles_volatility(history):
     """VOLATILITY: coefficient of variation of monthly miles
     (standard deviation divided by mean) over the 24 months."""
-    return None
+    h = as_of(history)
+    g = h.groupby("policy_id")["miles"]
+    return g.std() / g.mean()
 
 
 def max_hard_brakes_per_1k(history):
     """EXTREMES: the single worst month, measured as hard brakes per 1,000
     miles in that month, over the 24 months."""
-    return None
+    h = as_of(history).copy()
+    h["x"] = h["hard_brakes"] / h["miles"] * 1000
+    return h.groupby("policy_id")["x"].max()
 
 
 def hard_brake_trend(history):
     """TREND: hard brakes per 1,000 miles in months 13..24 minus hard brakes
     per 1,000 miles in months 1..12. Positive means getting worse."""
-    return None
+    h = as_of(history)
+    late = h[h["month"] > 12].groupby("policy_id")
+    early = h[h["month"] <= 12].groupby("policy_id")
+    late_rate = late["hard_brakes"].sum() / late["miles"].sum() * 1000
+    early_rate = early["hard_brakes"].sum() / early["miles"].sum() * 1000
+    return late_rate - early_rate
 
 
 def night_share_mean(history):
     """RATIO: average share of miles driven at night over the 24 months."""
-    return None
+    h = as_of(history)
+    return h.groupby("policy_id")["night_miles_share"].mean()
 
 
 # --------------------------------------------------------------------------
