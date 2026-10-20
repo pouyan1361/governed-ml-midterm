@@ -14,10 +14,11 @@ Open book. Individual. Keep each answer short and specific.
 ## Lab 1: Make the data compliant
 
 **1.1** Which four tests failed when you first ran `python -m pytest -q tests/test_lab1_compliance.py`? For each, name the control type (list or detective).
-
+#ans. The four failed tests were test_no_zip_like_column, test_no_date_like_column, test_no_suspiciously_predictive_column, and test_policy_agrees_with_data_dictionary. All four are detective controls because they inspect the prepared data and detect columns that the policy lists missed.
 **1.2** What did you add to `governance/policy.json`, and under which keys?
-
+# ans. I added zip and date_of_birth to pii_columns, and adjuster_fraud_review to leakage_columns in governance/policy.json.
 **1.3** Why is the fix in the policy and not in `src/prepare.py`? One or two sentences.
+# ans The preparation code already enforces the policy, so the durable fix is to complete the policy rather than change src/prepare.py. This keeps the versioned policy as the source of truth and lets the detective tests catch similar problems in the data.
 
 ---
 
