@@ -53,9 +53,27 @@ def test_gate_blocks_weak_subgroup_even_if_average_is_fine():
     assert run_gate(fake_metrics(groups=groups), POLICY)["decision"] == "BLOCKED"
 
 
+
 def test_gate_blocks_fpr_gap():
-    """LAB 5: prove your new check fires.
-    Replace the skip with a test that builds metrics with an fpr_ratio BELOW
-    your policy's min_fpr_ratio and asserts the decision is BLOCKED. Then add a
-    second assert showing that an fpr_ratio at or above the threshold PASSES."""
-    pytest.skip("LAB 5: write this test")
+    """Verify that the FPR fairness control blocks unequal outcomes."""
+    threshold = POLICY["min_fpr_ratio"]
+
+    # Scenario 1: FPR ratio below the policy threshold
+    bad_metrics = fake_metrics(fpr_ratio=threshold - 0.20)
+    blocked = run_gate(bad_metrics, POLICY)
+
+    assert blocked["decision"] == "BLOCKED"
+    assert any(
+        c["check"] == "fpr_ratio" and not c["passed"]
+        for c in blocked["checks"]
+    )
+
+    # Scenario 2: FPR ratio meets the policy threshold
+    good_metrics = fake_metrics(fpr_ratio=threshold)
+    passed = run_gate(good_metrics, POLICY)
+
+    assert passed["decision"] == "PASS"
+    assert any(
+        c["check"] == "fpr_ratio" and c["passed"]
+        for c in passed["checks"]
+    )
