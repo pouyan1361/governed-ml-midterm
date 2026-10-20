@@ -1,9 +1,9 @@
 {
   "model_version": "v3",
-  "author": "YOUR NAME HERE",
-  "description": "Describe your model in one sentence.",
+  "author": "Eric Davis",
+  "description": "Logistic regression on declared application fields plus engineered telematics features from the 24 months before the decision; no territory_risk_index.",
   "model_type": "logistic_regression",
   "params": {},
-  "features": ["years_licensed", "vehicle_age", "vehicle_value", "annual_mileage_declared", "prior_insurer_years", "prior_claims_3y"],
+  "features": ["annual_mileage_declared", "prior_insurer_years", "prior_claims_3y", "claims_per_month", "months_since_last_claim", "speeding_velocity", "max_hard_brakes_per_1k", "night_share_mean"],
   "decision_threshold": 0.5
 }
