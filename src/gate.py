@@ -17,6 +17,7 @@ In this repo you ARE allowed to change this file (Lab 5), because this time
 you are also the governance team. The CI integrity check will report the
 change for owner review, and it will refuse any change that LOOSENS a
 threshold. Tightening is allowed. Loosening needs the committee.
+    
 """
 import json
 from pathlib import Path
@@ -75,6 +76,11 @@ def run_gate(metrics, policy):
     #
     #    Then choose the threshold in governance/policy.json, defend it in
     #    MIDTERM.md, and prove the check fires in tests/test_lab5_gate.py.
+    if "min_fpr_ratio" in policy:
+        results.append(check(
+            "fpr_ratio", metrics["fpr_ratio"], policy["min_fpr_ratio"],
+            metrics["fpr_ratio"] >= policy["min_fpr_ratio"],
+            "Claim-filing drivers must be let through at similar rates across groups."))
 
     passed = all(r["passed"] for r in results)
     return {"decision": "PASS" if passed else "BLOCKED", "policy_version": policy["policy_version"], "checks": results}
