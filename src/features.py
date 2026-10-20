@@ -81,7 +81,9 @@ def claims_per_month(history):
       2. total = h.groupby("policy_id")["claim_filed"].sum()
       3. return total / DECISION_MONTH            a rate, so it is a FREQUENCY
     """
-    return None   # LAB 2: replace this line with the three steps above
+    h = as_of(history)
+    total = h.groupby("policy_id")["claim_filed"].sum()
+    return total / DECISION_MONTH
 
 
 # --------------------------------------------------------------------------
@@ -92,7 +94,10 @@ def months_since_last_claim(history):
     """RECENCY: months between the most recent prior claim and the decision.
     If a driver never filed a claim in the window, use DECISION_MONTH + 1
     (one more than the longest possible gap). Never use 0 for 'never'."""
-    return None
+    h = as_of(history)
+    last_claim = h.loc[h["claim_filed"] == 1].groupby("policy_id")["month"].max()
+    last_claim = last_claim.reindex(h["policy_id"].unique())
+    return (DECISION_MONTH - last_claim).fillna(DECISION_MONTH + 1)
 
 
 def speeding_velocity(history):
@@ -106,7 +111,9 @@ def speeding_velocity(history):
 def miles_volatility(history):
     """VOLATILITY: coefficient of variation of monthly miles
     (standard deviation divided by mean) over the 24 months."""
-    return None
+    h = as_of(history)
+    miles = h.groupby("policy_id")["miles"]
+    return miles.std() / miles.mean()
 
 
 def max_hard_brakes_per_1k(history):
@@ -123,8 +130,16 @@ def hard_brake_trend(history):
 
 def night_share_mean(history):
     """RATIO: average share of miles driven at night over the 24 months."""
-    return None
+    h = as_of(history)
+    return h.groupby("policy_id")["night_miles_share"].mean()
 
+
+# useful patterns
+# h = as_of(history)
+# h.groupby("policy_id")["column"].sum() # also .mean() .std() .max()
+# h = as_of(history).copy(); h["x"] = h["hard_brakes"] / h["miles"] * 1000 # per-row ratio
+# last = h[h["claim_filed"] == 1].groupby("policy_id")["month"].max()
+# last = last.reindex(h["policy_id"].unique()) # then fill the 'never' case
 
 # --------------------------------------------------------------------------
 # Assembly. Do not edit below this line.
